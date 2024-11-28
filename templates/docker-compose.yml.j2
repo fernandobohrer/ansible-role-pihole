@@ -1,0 +1,20 @@
+---
+services:
+  pihole:
+    container_name: ${CONTAINER_NAME}
+    environment:
+      PIHOLE_UID: ${PIHOLE_UID}
+      PIHOLE_GID: ${PIHOLE_GID}
+      TZ: ${CONTAINER_TIMEZONE}
+      PIHOLE_DNS_: ${PIHOLE_DNS}
+      SKIPGRAVITYONBOOT: ${PIHOLE_SKIP_GRAVITY_ON_BOOT}
+    hostname: ${CONTAINER_HOSTNAME}
+    image: ${CONTAINER_IMAGE}
+    ports:
+      - 53:53/tcp
+      - 53:53/udp
+      - {{ pihole_http_listening_port }}:80/tcp
+    restart: ${CONTAINER_RESTART_POLICY}
+    volumes:
+      - ./etc-pihole:/etc/pihole
+      - ./etc-dnsmasq.d:/etc/dnsmasq.d

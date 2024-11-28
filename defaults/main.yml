@@ -1,0 +1,25 @@
+---
+apt_cache_valid_time: 3600
+
+deployment_user: "{{ ansible_user }}"
+deployment_directory: /opt/docker/pihole
+
+container_name: pihole
+container_hostname: pihole
+container_timezone: America/Sao_Paulo
+container_restart_policy: unless-stopped
+
+pihole_upstream_dns_servers:
+  - 1.1.1.1
+  - 1.0.0.1
+  - 8.8.8.8
+  - 8.8.4.4
+
+pihole_update_gravity_schedule: "*-*-* 04:00 {{ container_timezone }}" # Once a day at 04:00
+
+pihole_dnsmasq_custom_settings:
+  - no-hosts
+  - no-negcache
+
+pihole_http_listening_port: 127.0.0.1:8080
+# The above exposes the port 80/TCP from the container on localhost at port 8080/TCP

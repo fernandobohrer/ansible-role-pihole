@@ -1,0 +1,15 @@
+.DEFAULT_GOAL := up
+
+.PHONY: up
+up:
+	docker compose --env-file {{ __container_environment_file }} up -d
+
+.PHONY: down
+down:
+	docker compose --env-file {{ __container_environment_file }} down
+
+.PHONY: cleanup
+cleanup: down
+	sudo rm -rf etc-pihole
+	sudo rm -rf etc-dnsmasq.d
+	sudo rm -rf {{ __ansible_role_conf_dir }}

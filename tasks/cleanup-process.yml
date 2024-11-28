@@ -1,0 +1,16 @@
+---
+- name: Ensure pihole container is down
+  community.docker.docker_compose_v2:
+    project_src: "{{ deployment_directory }}"
+    env_files: "{{ __container_environment_file }}"
+    project_name: "{{ container_name }}"
+    remove_orphans: true
+    state: absent
+
+- name: Recursively remove pihole directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - "{{ deployment_directory }}"
+    - "{{ __ansible_role_conf_dir }}"

@@ -1,0 +1,7 @@
+---
+- name: Restart pihole-update-gravity.timer
+  ansible.builtin.systemd:
+    name: pihole-update-gravity.timer
+    state: restarted
+    enabled: true
+    daemon_reload: true

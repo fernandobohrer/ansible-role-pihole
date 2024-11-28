@@ -1,0 +1,20 @@
+---
+dependencies:
+  - role: fernandobohrer.docker
+
+galaxy_info:
+  role_name: pihole
+  author: fernandobohrer
+  description: pihole
+  license: MIT
+  min_ansible_version: "2.1"
+  platforms:
+    - name: Debian
+      versions:
+        - bookworm
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble
+  galaxy_tags:
+    - pihole
