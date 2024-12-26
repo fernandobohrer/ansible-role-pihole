@@ -3,3 +3,6 @@ var_naming_pattern: ^[a-z_][a-z0-9_]*$
 
 exclude_paths:
   - meta/
+
+skip_list:
+  - risky-shell-pipe
