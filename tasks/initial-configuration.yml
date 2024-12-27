@@ -15,7 +15,9 @@
 - name: Identify pihole's randomly generated web console password
   no_log: true
   ansible.builtin.shell:
+    executable: /bin/bash
     cmd: |
+      set -o pipefail
       docker container logs {{ container_name }} | grep random | awk -F : '{print $2}' | sed 's/ //g'
   register: pihole_web_password
   changed_when: false
