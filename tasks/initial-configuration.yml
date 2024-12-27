@@ -11,6 +11,8 @@
     project_name: "{{ container_name }}"
     remove_orphans: true
     state: present
+    wait: true
+    wait_timeout: 300
 
 - name: Identify pihole's randomly generated web console password
   no_log: true
@@ -21,6 +23,7 @@
       docker container logs {{ container_name }} | grep random | awk -F : '{print $2}' | sed 's/ //g'
   register: pihole_web_password
   changed_when: false
+  failed_when: pihole_web_password.stdout | length == 0
 
 - name: Persist pihole's randomly generated web console password on disk
   no_log: true
