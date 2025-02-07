@@ -2,7 +2,7 @@
 - name: Ensure pihole container is down
   community.docker.docker_compose_v2:
     project_src: "{{ deployment_directory }}"
-    env_files: "{{ __container_environment_file }}"
+    env_files: "{{ __pihole__container_env_file }}"
     project_name: "{{ container_name }}"
     remove_orphans: true
     state: absent
@@ -13,4 +13,4 @@
     state: absent
   with_items:
     - "{{ deployment_directory }}"
-    - "{{ __ansible_role_conf_dir }}"
+    - "{{ __pihole__ansible_role_conf_dir }}"

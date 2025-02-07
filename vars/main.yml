@@ -2,16 +2,16 @@
 __pihole__role_dependencies:
   - make
 
-__pihole_skip_gravity_on_boot: true
-__pihole_update_gravity_timer_accuracy_sec: 1us
+__pihole__skip_gravity_on_boot: true
+__pihole__update_gravity_timer_accuracy: 1us
 
-__pihole_ftl_file: "{{ deployment_directory }}/etc-pihole/pihole-FTL.conf"
-__pihole_custom_settings_file: "{{ deployment_directory }}/etc-dnsmasq.d/99-{{ ansible_role_name }}-custom-settings.conf"
+__pihole__ph_ftl_file: "{{ deployment_directory }}/etc-pihole/pihole-FTL.conf"
+__pihole__ph_custom_settings_file: "{{ deployment_directory }}/etc-dnsmasq.d/99-{{ ansible_role_name }}-custom-settings.conf"
 
-__container_image: pihole/pihole:latest
-__container_environment_file: pihole.env
+__pihole__container_image: pihole/pihole:latest
+__pihole__container_env_file: pihole.env
 
-__ansible_role_conf_dir: /etc/{{ ansible_role_name }}
-__ansible_role_placeholder_file: "{{ __ansible_role_conf_dir }}/{{ ansible_role_name }}.readme"
+__pihole__ansible_role_conf_dir: /etc/{{ ansible_role_name }}
+__pihole__ansible_role_placeholder_file: "{{ __pihole__ansible_role_conf_dir }}/{{ ansible_role_name }}.readme"
 
-__firebog_blocklist_collection: https://v.firebog.net/hosts/lists.php?type=tick
+__pihole__firebog_blocklist_collection: https://v.firebog.net/hosts/lists.php?type=tick

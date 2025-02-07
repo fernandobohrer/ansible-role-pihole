@@ -7,7 +7,7 @@
 - name: Ensure pihole container is started
   community.docker.docker_compose_v2:
     project_src: "{{ deployment_directory }}"
-    env_files: "{{ __container_environment_file }}"
+    env_files: "{{ __pihole__container_env_file }}"
     project_name: "{{ container_name }}"
     remove_orphans: true
     state: present
@@ -28,7 +28,7 @@
 - name: Persist pihole's randomly generated web console password on disk
   no_log: true
   ansible.builtin.lineinfile:
-    path: "{{ __ansible_role_conf_dir }}/pihole-web-password.txt"
+    path: "{{ __pihole__ansible_role_conf_dir }}/pihole-web-password.txt"
     line: "{{ pihole__ph_web_password.stdout }}"
     create: true
     owner: root
@@ -38,7 +38,7 @@
 - name: Ensure pihole container is stopped
   community.docker.docker_compose_v2:
     project_src: "{{ deployment_directory }}"
-    env_files: "{{ __container_environment_file }}"
+    env_files: "{{ __pihole__container_env_file }}"
     project_name: "{{ container_name }}"
     remove_orphans: true
     state: absent
@@ -47,7 +47,7 @@
 
 - name: Disable pihole rate limit functionality
   ansible.builtin.lineinfile:
-    path: "{{ __pihole_ftl_file }}"
+    path: "{{ __pihole__ph_ftl_file }}"
     regexp: "^RATE_LIMIT="
     line: RATE_LIMIT=0/0
 
@@ -55,7 +55,7 @@
 
 - name: Apply custom pihole settings
   ansible.builtin.lineinfile:
-    path: "{{ __pihole_custom_settings_file }}"
+    path: "{{ __pihole__ph_custom_settings_file }}"
     regexp: "^{{ item }}"
     line: "{{ item }}"
     create: true
@@ -71,7 +71,7 @@
 - name: Ensure pihole container is started
   community.docker.docker_compose_v2:
     project_src: "{{ deployment_directory }}"
-    env_files: "{{ __container_environment_file }}"
+    env_files: "{{ __pihole__container_env_file }}"
     project_name: "{{ container_name }}"
     remove_orphans: true
     state: present
@@ -86,7 +86,7 @@
 
 - name: Download the Big Blocklist Collection from firebog.net
   ansible.builtin.uri:
-    url: "{{ __firebog_blocklist_collection }}"
+    url: "{{ __pihole__firebog_blocklist_collection }}"
     return_content: true
   register: pihole__firebog_blocklist
   failed_when: pihole__firebog_blocklist.status != 200 or 'https' not in pihole__firebog_blocklist.content
@@ -127,7 +127,7 @@
     task_details: Mark the initial pihole configuration as done
   ansible.builtin.template:
     src: role-placeholder-file.j2
-    dest: "{{ __ansible_role_placeholder_file }}"
+    dest: "{{ __pihole__ansible_role_placeholder_file }}"
     owner: root
     group: root
     mode: "644"

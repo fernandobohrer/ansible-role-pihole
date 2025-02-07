@@ -3,7 +3,7 @@ Description=Run the pihole update gravity service
 
 [Timer]
 OnCalendar={{ pihole_update_gravity_schedule }}
-AccuracySec={{ __pihole_update_gravity_timer_accuracy_sec }}
+AccuracySec={{ __pihole__update_gravity_timer_accuracy }}
 
 [Install]
 WantedBy=sysstat.service

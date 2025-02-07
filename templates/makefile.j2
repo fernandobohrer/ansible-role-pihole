@@ -2,14 +2,14 @@
 
 .PHONY: up
 up:
-	docker compose --env-file {{ __container_environment_file }} up -d
+	docker compose --env-file {{ __pihole__container_env_file }} up -d
 
 .PHONY: down
 down:
-	docker compose --env-file {{ __container_environment_file }} down
+	docker compose --env-file {{ __pihole__container_env_file }} down
 
 .PHONY: cleanup
 cleanup: down
 	sudo rm -rf etc-pihole
 	sudo rm -rf etc-dnsmasq.d
-	sudo rm -rf {{ __ansible_role_conf_dir }}
+	sudo rm -rf {{ __pihole__ansible_role_conf_dir }}

@@ -25,12 +25,12 @@
 
 - name: Check if the ansible role configuration directory exists
   ansible.builtin.stat:
-    path: "{{ __ansible_role_conf_dir }}"
+    path: "{{ __pihole__ansible_role_conf_dir }}"
   register: pihole__ansible_role_conf_dir
 
 - name: Check if the ansible role placeholder file exists
   ansible.builtin.stat:
-    path: "{{ __ansible_role_placeholder_file }}"
+    path: "{{ __pihole__ansible_role_placeholder_file }}"
   register: pihole__ansible_role_placeholder_file
 
 - name: Execute the cleanup process
@@ -51,7 +51,7 @@
 
 - name: Ensure ansible role configuration directory exists
   ansible.builtin.file:
-    path: "{{ __ansible_role_conf_dir }}"
+    path: "{{ __pihole__ansible_role_conf_dir }}"
     state: directory
     owner: root
     group: root
@@ -76,7 +76,7 @@
   with_items:
     - { source: makefile.j2, destination: "{{ deployment_directory }}/makefile" }
     - { source: docker-compose.yml.j2, destination: "{{ deployment_directory }}/docker-compose.yml" }
-    - { source: pihole.env.j2, destination: "{{ deployment_directory }}/{{ __container_environment_file }}" }
+    - { source: pihole.env.j2, destination: "{{ deployment_directory }}/{{ __pihole__container_env_file }}" }
 
 - name: Deploy service templates
   ansible.builtin.template:
@@ -96,19 +96,19 @@
 
 - name: Check if the pihole initial configuration was already executed
   ansible.builtin.stat:
-    path: "{{ __ansible_role_placeholder_file }}"
-  register: pihole__ph_initial_configuration
+    path: "{{ __pihole__ansible_role_placeholder_file }}"
+  register: pihole__initial_configuration
 
 - name: Execute the pihole initial configuration
   ansible.builtin.import_tasks: initial-configuration.yml
-  when: not pihole__ph_initial_configuration.stat.exists
+  when: not pihole__initial_configuration.stat.exists
 
 # Finally we ensure that the container is up and running.
 
 - name: Ensure pihole container is started
   community.docker.docker_compose_v2:
     project_src: "{{ deployment_directory }}"
-    env_files: "{{ __container_environment_file }}"
+    env_files: "{{ __pihole__container_env_file }}"
     project_name: "{{ container_name }}"
     remove_orphans: true
     state: present
