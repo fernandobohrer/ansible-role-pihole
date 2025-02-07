@@ -21,15 +21,15 @@
     cmd: |
       set -o pipefail
       docker container logs {{ pihole__container_name }} | grep random | awk -F : '{print $2}' | sed 's/ //g'
-  register: pihole__ph_web_password
+  register: pihole__web_password
   changed_when: false
-  failed_when: pihole__ph_web_password.stdout | length == 0
+  failed_when: pihole__web_password.stdout | length == 0
 
 - name: Persist pihole's randomly generated web console password on disk
   no_log: true
   ansible.builtin.lineinfile:
     path: "{{ __pihole__ansible_role_conf_dir }}/pihole-web-password.txt"
-    line: "{{ pihole__ph_web_password.stdout }}"
+    line: "{{ pihole__web_password.stdout }}"
     create: true
     owner: root
     group: root
