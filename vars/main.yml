@@ -1,4 +1,7 @@
 ---
+__pihole__role_dependencies:
+  - make
+
 __pihole_skip_gravity_on_boot: true
 __pihole_update_gravity_timer_accuracy_sec: 1us
 

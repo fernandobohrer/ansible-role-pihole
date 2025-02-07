@@ -40,9 +40,9 @@
 # The make package is installed on the target system so that the
 # make command can be used to start and stop the container if required.
 
-- name: Ensure make package is installed
+- name: Ensure role dependencies are installed
   ansible.builtin.apt:
-    name: make
+    name: "{{ __pihole__role_dependencies }}"
     state: present
     update_cache: true
     cache_valid_time: "{{ apt_cache_valid_time }}"
