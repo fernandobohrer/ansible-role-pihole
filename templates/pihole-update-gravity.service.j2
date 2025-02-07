@@ -2,7 +2,7 @@
 Description=Execute the pihole update gravity process
 
 [Service]
-ExecStart=/usr/bin/docker container exec {{ container_name }} pihole updateGravity
+ExecStart=/usr/bin/docker container exec {{ pihole__container_name }} pihole updateGravity
 
 [Install]
 WantedBy=default.target

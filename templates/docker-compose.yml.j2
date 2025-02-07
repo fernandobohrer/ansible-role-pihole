@@ -13,7 +13,7 @@ services:
     ports:
       - 53:53/tcp
       - 53:53/udp
-      - {{ pihole_http_listening_port }}:80/tcp
+      - {{ pihole__http_listening_port }}:80/tcp
     restart: ${CONTAINER_RESTART_POLICY}
     volumes:
       - ./etc-pihole:/etc/pihole

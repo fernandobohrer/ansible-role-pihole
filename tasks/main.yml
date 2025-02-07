@@ -59,9 +59,9 @@
 
 - name: Ensure deployment directory exists
   ansible.builtin.file:
-    path: "{{ deployment_directory }}"
+    path: "{{ pihole__deployment_directory }}"
     state: directory
-    owner: "{{ deployment_user }}"
+    owner: "{{ pihole__deployment_user }}"
     group: "{{ pihole__deployment_group }}"
     mode: "755"
 
@@ -69,14 +69,14 @@
   ansible.builtin.template:
     src: "{{ item.source }}"
     dest: "{{ item.destination }}"
-    owner: "{{ deployment_user }}"
+    owner: "{{ pihole__deployment_user }}"
     group: "{{ pihole__deployment_group }}"
     mode: "644"
     backup: false
   with_items:
-    - { source: makefile.j2, destination: "{{ deployment_directory }}/makefile" }
-    - { source: docker-compose.yml.j2, destination: "{{ deployment_directory }}/docker-compose.yml" }
-    - { source: pihole.env.j2, destination: "{{ deployment_directory }}/{{ __pihole__container_env_file }}" }
+    - { source: makefile.j2, destination: "{{ pihole__deployment_directory }}/makefile" }
+    - { source: docker-compose.yml.j2, destination: "{{ pihole__deployment_directory }}/docker-compose.yml" }
+    - { source: pihole.env.j2, destination: "{{ pihole__deployment_directory }}/{{ __pihole__container_env_file }}" }
 
 - name: Deploy service templates
   ansible.builtin.template:
@@ -107,8 +107,8 @@
 
 - name: Ensure pihole container is started
   community.docker.docker_compose_v2:
-    project_src: "{{ deployment_directory }}"
+    project_src: "{{ pihole__deployment_directory }}"
     env_files: "{{ __pihole__container_env_file }}"
-    project_name: "{{ container_name }}"
+    project_name: "{{ pihole__container_name }}"
     remove_orphans: true
     state: present

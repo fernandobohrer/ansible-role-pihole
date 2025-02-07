@@ -6,9 +6,9 @@
 
 - name: Ensure pihole container is started
   community.docker.docker_compose_v2:
-    project_src: "{{ deployment_directory }}"
+    project_src: "{{ pihole__deployment_directory }}"
     env_files: "{{ __pihole__container_env_file }}"
-    project_name: "{{ container_name }}"
+    project_name: "{{ pihole__container_name }}"
     remove_orphans: true
     state: present
     wait: true
@@ -20,7 +20,7 @@
     executable: /bin/bash
     cmd: |
       set -o pipefail
-      docker container logs {{ container_name }} | grep random | awk -F : '{print $2}' | sed 's/ //g'
+      docker container logs {{ pihole__container_name }} | grep random | awk -F : '{print $2}' | sed 's/ //g'
   register: pihole__ph_web_password
   changed_when: false
   failed_when: pihole__ph_web_password.stdout | length == 0
@@ -37,9 +37,9 @@
 
 - name: Ensure pihole container is stopped
   community.docker.docker_compose_v2:
-    project_src: "{{ deployment_directory }}"
+    project_src: "{{ pihole__deployment_directory }}"
     env_files: "{{ __pihole__container_env_file }}"
-    project_name: "{{ container_name }}"
+    project_name: "{{ pihole__container_name }}"
     remove_orphans: true
     state: absent
 
@@ -63,22 +63,22 @@
     group: root
     mode: "644"
   with_items:
-    - "{{ pihole_dnsmasq_custom_settings }}"
+    - "{{ pihole__dnsmasq_custom_settings }}"
 
 # Start the container and run pihole update
 # gravity so that the pihole sqlite database gets created.
 
 - name: Ensure pihole container is started
   community.docker.docker_compose_v2:
-    project_src: "{{ deployment_directory }}"
+    project_src: "{{ pihole__deployment_directory }}"
     env_files: "{{ __pihole__container_env_file }}"
-    project_name: "{{ container_name }}"
+    project_name: "{{ pihole__container_name }}"
     remove_orphans: true
     state: present
 
 - name: Run pihole update gravity
   community.docker.docker_container_exec:
-    container: "{{ container_name }}"
+    container: "{{ pihole__container_name }}"
     command: "pihole updateGravity"
     timeout: 300
 
@@ -93,7 +93,7 @@
 
 - name: Add additional blocklists to pihole
   community.docker.docker_container_exec:
-    container: "{{ container_name }}"
+    container: "{{ pihole__container_name }}"
     command: sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled) VALUES ('{{ item }}', 1);"
     timeout: 30
   with_items: "{{ pihole__firebog_blocklist.content | split('\n') | select('search', 'https') }}"
@@ -103,7 +103,7 @@
 
 - name: Run pihole update gravity
   community.docker.docker_container_exec:
-    container: "{{ container_name }}"
+    container: "{{ pihole__container_name }}"
     command: "pihole updateGravity"
     timeout: 300
 
@@ -116,7 +116,7 @@
 
 - name: Run pihole flush
   community.docker.docker_container_exec:
-    container: "{{ container_name }}"
+    container: "{{ pihole__container_name }}"
     command: "pihole flush >/dev/null 2>&1"
     timeout: 300
 

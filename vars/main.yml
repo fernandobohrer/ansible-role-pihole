@@ -5,8 +5,8 @@ __pihole__role_dependencies:
 __pihole__skip_gravity_on_boot: true
 __pihole__update_gravity_timer_accuracy: 1us
 
-__pihole__ph_ftl_file: "{{ deployment_directory }}/etc-pihole/pihole-FTL.conf"
-__pihole__ph_custom_settings_file: "{{ deployment_directory }}/etc-dnsmasq.d/99-{{ ansible_role_name }}-custom-settings.conf"
+__pihole__ph_ftl_file: "{{ pihole__deployment_directory }}/etc-pihole/pihole-FTL.conf"
+__pihole__ph_custom_settings_file: "{{ pihole__deployment_directory }}/etc-dnsmasq.d/99-{{ ansible_role_name }}-custom-settings.conf"
 
 __pihole__container_image: pihole/pihole:latest
 __pihole__container_env_file: pihole.env
