@@ -1,24 +1,24 @@
 ---
 - name: Get the primary group associated with the ansible_user
   ansible.builtin.command: getent group {{ ansible_user }}
-  register: ansible_user_group
+  register: pihole__ansible_user_group
   changed_when: false
 
 - name: Get the uid associated with the ansible_user
   ansible.builtin.command: id -u {{ ansible_user }}
-  register: ansible_user_uid
+  register: pihole__ansible_user_uid
   changed_when: false
 
 - name: Get the gid associated with the ansible_user primary group
-  ansible.builtin.command: id -g {{ ansible_user_group.stdout.split(':')[0] }}
-  register: ansible_user_gid
+  ansible.builtin.command: id -g {{ pihole__ansible_user_group.stdout.split(':')[0] }}
+  register: pihole__ansible_user_gid
   changed_when: false
 
 - name: Set required facts
   ansible.builtin.set_fact:
-    pihole_uid: "{{ ansible_user_uid.stdout }}"
-    pihole_gid: "{{ ansible_user_gid.stdout }}"
-    deployment_group: "{{ ansible_user_group.stdout.split(':')[0] }}"
+    pihole__uid: "{{ pihole__ansible_user_uid.stdout }}"
+    pihole__gid: "{{ pihole__ansible_user_gid.stdout }}"
+    pihole__deployment_group: "{{ pihole__ansible_user_group.stdout.split(':')[0] }}"
 
 # If the role configuration directory exists and the role placeholder file
 # doesn't, the cleanup process is triggered so that a fresh configuration is executed.
@@ -26,16 +26,16 @@
 - name: Check if the ansible role configuration directory exists
   ansible.builtin.stat:
     path: "{{ __ansible_role_conf_dir }}"
-  register: ansible_role_conf_dir
+  register: pihole__ansible_role_conf_dir
 
 - name: Check if the ansible role placeholder file exists
   ansible.builtin.stat:
     path: "{{ __ansible_role_placeholder_file }}"
-  register: ansible_role_placeholder_file
+  register: pihole__ansible_role_placeholder_file
 
 - name: Execute the cleanup process
   ansible.builtin.import_tasks: cleanup-process.yml
-  when: ansible_role_conf_dir.stat.exists and not ansible_role_placeholder_file.stat.exists
+  when: pihole__ansible_role_conf_dir.stat.exists and not pihole__ansible_role_placeholder_file.stat.exists
 
 # The make package is installed on the target system so that the
 # make command can be used to start and stop the container if required.
@@ -62,7 +62,7 @@
     path: "{{ deployment_directory }}"
     state: directory
     owner: "{{ deployment_user }}"
-    group: "{{ deployment_group }}"
+    group: "{{ pihole__deployment_group }}"
     mode: "755"
 
 - name: Deploy templates
@@ -70,7 +70,7 @@
     src: "{{ item.source }}"
     dest: "{{ item.destination }}"
     owner: "{{ deployment_user }}"
-    group: "{{ deployment_group }}"
+    group: "{{ pihole__deployment_group }}"
     mode: "644"
     backup: false
   with_items:
@@ -97,11 +97,11 @@
 - name: Check if the pihole initial configuration was already executed
   ansible.builtin.stat:
     path: "{{ __ansible_role_placeholder_file }}"
-  register: pihole_initial_configuration
+  register: pihole__ph_initial_configuration
 
 - name: Execute the pihole initial configuration
   ansible.builtin.import_tasks: initial-configuration.yml
-  when: not pihole_initial_configuration.stat.exists
+  when: not pihole__ph_initial_configuration.stat.exists
 
 # Finally we ensure that the container is up and running.
 

@@ -21,15 +21,15 @@
     cmd: |
       set -o pipefail
       docker container logs {{ container_name }} | grep random | awk -F : '{print $2}' | sed 's/ //g'
-  register: pihole_web_password
+  register: pihole__ph_web_password
   changed_when: false
-  failed_when: pihole_web_password.stdout | length == 0
+  failed_when: pihole__ph_web_password.stdout | length == 0
 
 - name: Persist pihole's randomly generated web console password on disk
   no_log: true
   ansible.builtin.lineinfile:
     path: "{{ __ansible_role_conf_dir }}/pihole-web-password.txt"
-    line: "{{ pihole_web_password.stdout }}"
+    line: "{{ pihole__ph_web_password.stdout }}"
     create: true
     owner: root
     group: root
@@ -88,15 +88,15 @@
   ansible.builtin.uri:
     url: "{{ __firebog_blocklist_collection }}"
     return_content: true
-  register: firebog_blocklist
-  failed_when: firebog_blocklist.status != 200 or 'https' not in firebog_blocklist.content
+  register: pihole__firebog_blocklist
+  failed_when: pihole__firebog_blocklist.status != 200 or 'https' not in pihole__firebog_blocklist.content
 
 - name: Add additional blocklists to pihole
   community.docker.docker_container_exec:
     container: "{{ container_name }}"
     command: sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled) VALUES ('{{ item }}', 1);"
     timeout: 30
-  with_items: "{{ firebog_blocklist.content | split('\n') | select('search', 'https') }}"
+  with_items: "{{ pihole__firebog_blocklist.content | split('\n') | select('search', 'https') }}"
 
 # Now that additional blocklists were added to the pihole
 # sqlite database, run update gravity to get the lists contents.
