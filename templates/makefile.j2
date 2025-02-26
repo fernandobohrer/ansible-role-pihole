@@ -11,5 +11,4 @@ down:
 .PHONY: cleanup
 cleanup: down
 	sudo rm -rf etc-pihole
-	sudo rm -rf etc-dnsmasq.d
 	sudo rm -rf {{ __pihole__ansible_role_conf_dir }}

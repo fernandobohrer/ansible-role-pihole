@@ -6,8 +6,11 @@ services:
       PIHOLE_UID: ${PIHOLE_UID}
       PIHOLE_GID: ${PIHOLE_GID}
       TZ: ${CONTAINER_TIMEZONE}
-      PIHOLE_DNS_: ${PIHOLE_DNS}
-      SKIPGRAVITYONBOOT: ${PIHOLE_SKIP_GRAVITY_ON_BOOT}
+      ADDITIONAL_PACKAGES: ${PIHOLE_ADDITIONAL_PACKAGES}
+      FTLCONF_dns_upstreams: ${PIHOLE_FTLCONF_DNS_UPSTREAMS}
+      FTLCONF_misc_dnsmasq_lines: ${PIHOLE_FTLCONF_MISC_DNSMASQ_LINES}
+      FTLCONF_dns_rateLimit_count: ${PIHOLE_FTLCONF_DNS_RATELIMIT_COUNT}
+      FTLCONF_dns_rateLimit_interval: ${PIHOLE_FTLCONF_DNS_RATELIMIT_INTERVAL}
     hostname: ${CONTAINER_HOSTNAME}
     image: ${CONTAINER_IMAGE}
     ports:
@@ -17,4 +20,3 @@ services:
     restart: ${CONTAINER_RESTART_POLICY}
     volumes:
       - ./etc-pihole:/etc/pihole
-      - ./etc-dnsmasq.d:/etc/dnsmasq.d

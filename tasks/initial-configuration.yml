@@ -1,9 +1,4 @@
 ---
-# Since this is the first execution of the container, start and
-# stop it so that the basic operational folders and files get created.
-# After the start of the container and before the container is
-# stopped, persist the automatically generated web console password on disk.
-
 - name: Ensure pihole container is started
   community.docker.docker_compose_v2:
     project_src: "{{ pihole__deployment_directory }}"
@@ -35,54 +30,15 @@
     group: root
     mode: "600"
 
-- name: Ensure pihole container is stopped
-  community.docker.docker_compose_v2:
-    project_src: "{{ pihole__deployment_directory }}"
-    env_files: "{{ __pihole__container_env_file }}"
-    project_name: "{{ pihole__container_name }}"
-    remove_orphans: true
-    state: absent
+# Run "pihole updateGravity" so that the pihole sqlite database gets created:
 
-# Disable pihole rate limit functionality.
-
-- name: Disable pihole rate limit functionality
-  ansible.builtin.lineinfile:
-    path: "{{ __pihole__ph_ftl_file }}"
-    regexp: "^RATE_LIMIT="
-    line: RATE_LIMIT=0/0
-
-# Apply pihole dnsmasq custom settings.
-
-- name: Apply custom pihole settings
-  ansible.builtin.lineinfile:
-    path: "{{ __pihole__ph_custom_settings_file }}"
-    regexp: "^{{ item }}"
-    line: "{{ item }}"
-    create: true
-    owner: root
-    group: root
-    mode: "644"
-  with_items:
-    - "{{ pihole__dnsmasq_custom_settings }}"
-
-# Start the container and run pihole update
-# gravity so that the pihole sqlite database gets created.
-
-- name: Ensure pihole container is started
-  community.docker.docker_compose_v2:
-    project_src: "{{ pihole__deployment_directory }}"
-    env_files: "{{ __pihole__container_env_file }}"
-    project_name: "{{ pihole__container_name }}"
-    remove_orphans: true
-    state: present
-
-- name: Run pihole update gravity
+- name: Run pihole updateGravity
   community.docker.docker_container_exec:
     container: "{{ pihole__container_name }}"
     command: "pihole updateGravity"
     timeout: 300
 
-# Now that the pihole sqlite database exists, add additional blocklists to it.
+# Now that the pihole sqlite database exists, add extra blocklists to it:
 
 - name: Download the Big Blocklist Collection from firebog.net
   ansible.builtin.uri:
@@ -91,24 +47,22 @@
   register: pihole__firebog_blocklist
   failed_when: pihole__firebog_blocklist.status != 200 or 'https' not in pihole__firebog_blocklist.content
 
-- name: Add additional blocklists to pihole
+- name: Add extra blocklists to pihole
   community.docker.docker_container_exec:
     container: "{{ pihole__container_name }}"
     command: sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled) VALUES ('{{ item }}', 1);"
     timeout: 30
   with_items: "{{ pihole__firebog_blocklist.content | split('\n') | select('search', 'https') }}"
 
-# Now that additional blocklists were added to the pihole
-# sqlite database, run update gravity to get the lists contents.
+# Now that extra blocklists were added to the pihole sqlite database, run "pihole updateGravity" to get the lists' contents:
 
-- name: Run pihole update gravity
+- name: Run pihole updateGravity
   community.docker.docker_container_exec:
     container: "{{ pihole__container_name }}"
     command: "pihole updateGravity"
     timeout: 300
 
-# Now that the preparation is complete, flush logs and
-# information that was gathered during the preparation process.
+# Now that the pihole setup is complete, flush logs and information that was gathered during the preparation process:
 
 - name: Pause for 10 seconds to build the application cache
   ansible.builtin.pause:
@@ -120,7 +74,7 @@
     command: "pihole flush >/dev/null 2>&1"
     timeout: 300
 
-# Create a placeholder file that will prevent the above tasks from running again.
+# Create a placeholder file to prevent the above tasks from running again:
 
 - name: Create a placeholder file that will prevent the above tasks from running again
   vars:
