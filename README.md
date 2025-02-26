@@ -22,7 +22,7 @@ Check [here][02].
 
 ## 🧰 Dependencies
 
-Check `meta/main.yml`.
+Check [here][03].
 
 ## ⚡ Quick start
 
@@ -40,13 +40,13 @@ An example of how integrate this role to an Ansible playbook can be found here:
 
 ## 📋 Usage
 
-Once the deployment process is complete, you will need to configure your router to have DHCP clients use Pi-hole as their DNS server which ensures all devices connected to your network will have content blocked without any further intervention. Details can be found [here][03] and [here][04].
+Once the deployment process is complete, you will need to configure your router to have DHCP clients use Pi-hole as their DNS server which ensures all devices connected to your network will have content blocked without any further intervention. Details can be found [here][04] and [here][05].
 
 ## ℹ️ Additional information
 
-Please note that this role makes use of the lists that are bulleted with a ✔️ and displayed in green available at [firebog.net][05].
+Please note that this role makes use of the lists that are bulleted with a ✔️ and displayed in green available at [firebog.net][06].
 
-As can be seen from [here][06], these ticked lists are meant to be used with Pi-hole installations that will have minimal maintenance.
+As can be seen from [here][07], these ticked lists are meant to be used with Pi-hole installations that will have minimal maintenance.
 
 Since the main goal of this role is to automate the deployment of Pi-hole in a way that the solution does not stand in your way, it makes sense to use lists that are less likely to break things.
 
@@ -58,7 +58,7 @@ This role was tested on and is confirmed to work with the following Linux distri
 - `Ubuntu 22.04`
 - `Ubuntu 24.04`
 
-Details can be found in the [Molecule][07] scenarios available in the `molecule` folder.
+Details can be found in the [Molecule][08] scenarios available in the `molecule` folder.
 
 ## ⚠️ Warning
 
@@ -68,13 +68,14 @@ With the above in mind, it is **imperative** that you familiarize yourself with 
 
 ## 📝 License
 
-This project is licensed under the terms of the [MIT license][08].
+This project is licensed under the terms of the [MIT license][09].
 
 [01]: https://pi-hole.net/
 [02]: defaults/main.yml
-[03]: https://docs.pi-hole.net/main/post-install/
-[04]: https://discourse.pi-hole.net/t/how-do-i-configure-my-devices-to-use-pi-hole-as-their-dns-server/245
-[05]: https://firebog.net/
-[06]: https://v.firebog.net/hosts/lists.php
-[07]: https://github.com/fernandobohrer/ansible-molecule-scenarios
-[08]: /LICENSE
+[03]: meta/main.yml
+[04]: https://docs.pi-hole.net/main/post-install/
+[05]: https://discourse.pi-hole.net/t/how-do-i-configure-my-devices-to-use-pi-hole-as-their-dns-server/245
+[06]: https://firebog.net/
+[07]: https://v.firebog.net/hosts/lists.php
+[08]: https://github.com/fernandobohrer/ansible-molecule-scenarios
+[09]: /LICENSE
