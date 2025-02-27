@@ -30,6 +30,13 @@
     group: root
     mode: "600"
 
+- name: Add extra packages to the pihole container
+  community.docker.docker_container_exec:
+    container: "{{ pihole__container_name }}"
+    command: apk add {{ item }}
+    timeout: 60
+  with_items: "{{ __pihole__additional_packages }}"
+
 # Run "pihole updateGravity" so that the pihole sqlite database gets created:
 
 - name: Run pihole updateGravity
@@ -51,7 +58,7 @@
   community.docker.docker_container_exec:
     container: "{{ pihole__container_name }}"
     command: sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled) VALUES ('{{ item }}', 1);"
-    timeout: 30
+    timeout: 60
   with_items: "{{ pihole__firebog_blocklist.content | split('\n') | select('search', 'https') }}"
 
 # Now that extra blocklists were added to the pihole sqlite database, run "pihole updateGravity" to get the lists' contents:
