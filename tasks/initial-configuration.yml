@@ -57,7 +57,7 @@
 - name: Add extra blocklists to pihole
   community.docker.docker_container_exec:
     container: "{{ pihole__container_name }}"
-    command: sqlite3 /etc/pihole/gravity.db "INSERT INTO adlist (address, enabled) VALUES ('{{ item }}', 1);"
+    command: sqlite3 /etc/pihole/gravity.db "BEGIN TRANSACTION; INSERT INTO adlist (address, enabled) VALUES ('{{ item }}', 1); COMMIT;"
     timeout: 60
   with_items: "{{ pihole__firebog_blocklist.content | split('\n') | select('search', 'https') }}"
 
