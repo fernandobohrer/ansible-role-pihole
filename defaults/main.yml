@@ -3,10 +3,10 @@
 # Option set in seconds.
 apt_cache_valid_time: 3600
 
-# The user that will be the owner of the docker container files.
+# The user that will be the owner of the docker container files:
 pihole__deployment_user: "{{ ansible_user }}"
 
-# The path to which the docker container files will be deployed to.
+# The path to which the docker container files will be deployed to:
 pihole__deployment_directory: /opt/docker/pihole
 
 pihole__container_name: pihole
@@ -22,10 +22,10 @@ pihole__dnsmasq_custom_settings:
   - no-resolv
   - no-negcache
 
-# Expose port 80/TCP from the container on localhost at port 8080/TCP.
+# Expose port 80/TCP from the container on localhost at port 8080/TCP:
 pihole__http_listening_port: 127.0.0.1:8080
 
-# Additional, user managed, blocklists.
+# Additional, user managed, blocklists:
 pihole__user_blocklists:
   - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt
   - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt
