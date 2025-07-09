@@ -22,8 +22,8 @@ pihole__dnsmasq_custom_settings:
   - no-resolv
   - no-negcache
 
+# Expose port 80/TCP from the container on localhost at port 8080/TCP.
 pihole__http_listening_port: 127.0.0.1:8080
-# The above exposes the port 80/TCP from the container on localhost at port 8080/TCP
 
 # Additional, user managed, blocklists.
 pihole__user_blocklists:
