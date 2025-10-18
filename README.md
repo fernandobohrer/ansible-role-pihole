@@ -54,8 +54,7 @@ Since the main goal of this role is to automate the deployment of Pi-hole in a w
 
 This role was tested on and is confirmed to work with the following Linux distributions:
 
-- `Debian 12`
-- `Ubuntu 22.04`
+- `Debian 13`
 - `Ubuntu 24.04`
 
 Details can be found in the [Molecule][08] scenarios available in the `molecule` folder.
