@@ -17,3 +17,5 @@ __pihole__ansible_role_conf_dir: /etc/{{ ansible_role_name }}
 __pihole__ansible_role_placeholder_file: "{{ __pihole__ansible_role_conf_dir }}/{{ ansible_role_name }}.readme"
 
 __pihole__firebog_blocklist_collection: https://v.firebog.net/hosts/lists.php?type=tick
+
+__pihole__systemd_resolved_conf_dir: /etc/systemd/resolved.conf.d

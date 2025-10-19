@@ -1,4 +1,8 @@
 ---
+- name: Disable systemd-resolved DNS stub listener
+  ansible.builtin.import_tasks: disable-dns-stub-listener.yml
+  when: ansible_distribution == 'Ubuntu'
+
 - name: Get the primary group associated with the ansible_user
   ansible.builtin.command: getent group {{ ansible_user }}
   register: pihole__ansible_user_group

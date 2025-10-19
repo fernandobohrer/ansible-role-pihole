@@ -1,0 +1,23 @@
+---
+- name: Ensure that the systemd-resolved configuration directory exists
+  ansible.builtin.file:
+    path: "{{ __pihole__systemd_resolved_conf_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "755"
+
+- name: Adjust systemd-resolved service configuration
+  ansible.builtin.copy:
+    src: disable-dns-stub-listener.conf
+    dest: "{{ __pihole__systemd_resolved_conf_dir }}/disable-dns-stub-listener.conf"
+    backup: true
+    owner: root
+    group: root
+    mode: "644"
+  notify:
+    - Restart systemd-resolved.service
+    - Restart docker.service
+
+- name: Force all notified handlers to run at this point
+  ansible.builtin.meta: flush_handlers

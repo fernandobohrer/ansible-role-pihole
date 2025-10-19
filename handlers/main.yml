@@ -5,3 +5,17 @@
     state: restarted
     enabled: true
     daemon_reload: true
+
+- name: Restart systemd-resolved.service
+  ansible.builtin.systemd:
+    name: systemd-resolved.service
+    state: restarted
+    enabled: true
+    daemon_reload: true
+
+- name: Restart docker.service
+  ansible.builtin.systemd:
+    name: docker.service
+    state: restarted
+    enabled: true
+    daemon_reload: true
