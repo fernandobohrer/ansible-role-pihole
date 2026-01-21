@@ -6,12 +6,12 @@ services:
       PIHOLE_UID: ${PIHOLE_UID}
       PIHOLE_GID: ${PIHOLE_GID}
       TZ: ${CONTAINER_TIMEZONE}
+      FTLCONF_dns_dnssec: ${PIHOLE_FTLCONF_DNS_DNSSEC}
       FTLCONF_dns_upstreams: ${PIHOLE_FTLCONF_DNS_UPSTREAMS}
-      FTLCONF_misc_dnsmasq_lines: ${PIHOLE_FTLCONF_MISC_DNSMASQ_LINES}
+      FTLCONF_dns_ignoreLocalhost: ${PIHOLE_FTLCONF_DNS_IGNORELOCALHOST}
       FTLCONF_dns_rateLimit_count: ${PIHOLE_FTLCONF_DNS_RATELIMIT_COUNT}
       FTLCONF_dns_rateLimit_interval: ${PIHOLE_FTLCONF_DNS_RATELIMIT_INTERVAL}
-      FTLCONF_dns_dnssec: ${PIHOLE_FTLCONF_DNS_DNSSEC}
-      FTLCONF_dns_ignoreLocalhost: ${PIHOLE_FTLCONF_DNS_IGNORELOCALHOST}
+      FTLCONF_misc_dnsmasq_lines: ${PIHOLE_FTLCONF_MISC_DNSMASQ_LINES}
     hostname: ${CONTAINER_HOSTNAME}
     image: ${CONTAINER_IMAGE}
     ports:
