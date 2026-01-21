@@ -14,6 +14,11 @@ pihole__container_hostname: pihole
 pihole__container_timezone: America/Sao_Paulo
 pihole__container_restart_policy: unless-stopped
 
+pihole__dnssec: true
+pihole__ignorelocalhost: true
+pihole__ratelimit_count: 0
+pihole__ratelimit_interval: 0
+
 pihole__upstream_dns_servers: [1.1.1.1, 1.0.0.1, 8.8.8.8, 8.8.4.4]
 pihole__update_gravity_schedule: "*-*-* 04:00 {{ pihole__container_timezone }}" # Once a day at 04:00
 
@@ -29,9 +34,3 @@ pihole__http_listening_port: 127.0.0.1:8080
 pihole__user_blocklists:
   - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt
   - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt
-
-pihole__dnssec: false
-pihole__ignorelocalhost: false
-
-pihole__ratelimit_count: 0
-pihole__ratelimit_interval: 0
