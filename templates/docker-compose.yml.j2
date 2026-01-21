@@ -10,6 +10,8 @@ services:
       FTLCONF_misc_dnsmasq_lines: ${PIHOLE_FTLCONF_MISC_DNSMASQ_LINES}
       FTLCONF_dns_rateLimit_count: ${PIHOLE_FTLCONF_DNS_RATELIMIT_COUNT}
       FTLCONF_dns_rateLimit_interval: ${PIHOLE_FTLCONF_DNS_RATELIMIT_INTERVAL}
+      FTLCONF_dns_dnssec: ${PIHOLE_FTLCONF_DNS_DNSSEC}
+      FTLCONF_dns_ignoreLocalhost: ${PIHOLE_FTLCONF_DNS_IGNORELOCALHOST}
     hostname: ${CONTAINER_HOSTNAME}
     image: ${CONTAINER_IMAGE}
     ports:

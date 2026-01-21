@@ -29,3 +29,6 @@ pihole__http_listening_port: 127.0.0.1:8080
 pihole__user_blocklists:
   - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/pro.txt
   - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/tif.txt
+
+pihole__dnssec: false
+pihole__ignorelocalhost: false
