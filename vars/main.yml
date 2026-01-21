@@ -5,9 +5,6 @@ __pihole__role_dependencies:
 __pihole__additional_packages:
   - sqlite
 
-__pihole__ratelimit_count: 0
-__pihole__ratelimit_interval: 0
-
 __pihole__update_gravity_timer_accuracy: 1us
 
 __pihole__container_image: pihole/pihole:latest

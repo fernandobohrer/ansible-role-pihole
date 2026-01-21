@@ -32,3 +32,6 @@ pihole__user_blocklists:
 
 pihole__dnssec: false
 pihole__ignorelocalhost: false
+
+pihole__ratelimit_count: 0
+pihole__ratelimit_interval: 0
