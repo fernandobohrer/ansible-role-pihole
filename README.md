@@ -18,11 +18,11 @@ This role deploys [Pi-hole][01] and its dependencies and configures the solution
 
 ## 📑 Role Variables
 
-Check [here][02].
+Check [defaults/main.yml][02].
 
 ## 🧰 Dependencies
 
-Check [here][03].
+Check [meta/main.yml][03].
 
 ## ⚡ Quick start
 
@@ -40,13 +40,13 @@ An example of how integrate this role to an Ansible playbook can be found here:
 
 ## 📋 Usage
 
-Once the deployment process is complete, you will need to configure your router to have DHCP clients use Pi-hole as their DNS server which ensures all devices connected to your network will have content blocked without any further intervention. Details can be found [here][04] and [here][05].
+Once the deployment process is complete, you will need to configure your router to have DHCP clients use Pi-hole as their DNS server which ensures all devices connected to your network will have content blocked without any further intervention. Details can be found at the [Pi-hole post-install documentation][04] and at [this discourse.pi-hole.net question][05].
 
 ## ℹ️ Additional information
 
 Please note that this role makes use of the lists that are bulleted with a ✔️ and displayed in green available at [firebog.net][06].
 
-As can be seen from [here][07], these ticked lists are meant to be used with Pi-hole installations that will have minimal maintenance.
+As can be seen from the [firebog.net lists page][07], these ticked lists are meant to be used with Pi-hole installations that will have minimal maintenance.
 
 Since the main goal of this role is to automate the deployment of Pi-hole in a way that the solution does not stand in your way, it makes sense to use lists that are less likely to break things.
 
